@@ -7,7 +7,7 @@ Description: Setup and test API key
 import openai
 import os
 
-from key import key as openai_key
+from ... import key as openai_key
 
 openai.api_key = openai_key
 response = openai.Completion.create(
