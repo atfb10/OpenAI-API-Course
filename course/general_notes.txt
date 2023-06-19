@@ -1,2 +1,28 @@
 Adam Forestier
-June 12, 2023
+June 13, 2023
+
+Embedding - creation of a vector representation of an object, such as a text embedding, allowing us to represent a word as a vector of N-dimensions
+
+Diffusion model - Trained to undo steps of fixed corruption process (takes in noise and tries to produce an image)
+    * Fixed Corruption process 
+        > each step of fixed corruption process adds a small amount of gaussian noise to an image, which erases some of the information in it. 
+        > After the final step, the image becomes indistinguishable from pure noise
+        > The diffusion model is trained to reverse this process and in doing so learns to regenerate what might have been erased in each step 
+
+GPT High Level Overview
+    * GPT - Generative Pre-Training Transformer
+    * Takes in input text (tokens) and outputs some amount of text (tokens)
+    * Essentially, entirety of internet text is training data
+    * GPT-3 Steps
+        > Word text is converted to token set 
+        > Tokens are converted to vectors 
+        > Vectors are passed into GPT-3 and  the model returns a probability distribution across the vocabulary of vectors
+        > We can then specify via "temperature" which vector should appear next
+        > Which can then be reversed back into text
+
+DALL-E II High Level Overview
+    * Takes in input text string and output an image
+    * 2 main stages
+        1. Prior - Performs text embedding, generging a CLIP (Contrastive Language-Image Pre-Training) image embedding
+            > Trained on image-text pairs
+        2. Decoder (unCLIP) - Diffusion model which actually generates the image from the prior embedding
