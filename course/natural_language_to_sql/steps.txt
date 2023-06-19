@@ -1,0 +1,5 @@
+1. Ingest tabular data & convert to SQL database
+2. Ingest natural language request
+3. Convert NLP to SQL via OpenAI API
+4. Send SQL request to database 
+5. Return results
