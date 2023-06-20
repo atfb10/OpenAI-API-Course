@@ -26,3 +26,18 @@ DALL-E II High Level Overview
         1. Prior - Performs text embedding, generging a CLIP (Contrastive Language-Image Pre-Training) image embedding
             > Trained on image-text pairs
         2. Decoder (unCLIP) - Diffusion model which actually generates the image from the prior embedding
+
+Principles for Effective Prompts
+    * Model Choice
+    * Instructions
+        > Put instructions at beginning of a prompt and use ### to seperate out instructions from desired output
+        > Example:
+            Summarize the text below into bullet points.
+
+            Text:"""
+            {some text}
+            """
+    * Detail
+    * Examples
+    * Be Direct
+    * Initiate the Response
