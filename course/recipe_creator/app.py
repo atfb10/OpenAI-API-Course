@@ -6,6 +6,8 @@ Takes in ingredients and returns recipe and image of recipe
 
 import openai
 import re
+import requests
+import shutil
 
 from key import key as openai_key
 
@@ -29,7 +31,22 @@ def extract_recipe_title(recipe: str) -> str:
     title = re.findall("^.*Recipe Title: .*$", recipe, re.MULTILINE)[0].strip().split("Recipe Title: ")[1]
     return title
 
-i = ['butter', 'eggs', 'milk', 'bacon', 'havarti cheese', 'spinach', 'french bread']
+def save_img(img_response, file_name) -> int:
+    '''
+    arguments: response from api
+    returns: status code
+    description: save_img downloads the image that api has created
+    '''
+    img_url = img_response['data'][0]['url']
+    img_results = requests.get(img_url, stream=True)
+    if img_results.status_code == 200:
+        with open(file_name, 'wb') as f:
+            shutil.copyfileobj(img_results.raw, f)
+    else:
+        print('ERROR LOADING IMAGE')
+    return img_results.status_code
+
+i = ['butter', 'eggs', 'milk', 'bacon', 'havarti cheese', 'french bread']
 
 response = openai.Completion.create(
     model='text-davinci-003',
@@ -38,5 +55,18 @@ response = openai.Completion.create(
     temperature=.7
 )
 
+# The recipe
 recipe_text = response['choices'][0]['text']
-print(extract_recipe_title(recipe=recipe_text))
+
+# get recipe title to generate photo
+recipe_title = extract_recipe_title(recipe=recipe_text)
+
+# Create image
+img_response = openai.Image.create(
+    prompt=recipe_title,
+    n=1,
+    size='256x256'
+)
+
+# Save image
+save_img(img_response=img_response, file_name='recipe_photo.png')
