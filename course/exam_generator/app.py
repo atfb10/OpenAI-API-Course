@@ -64,16 +64,16 @@ def take_quiz(student_view: dict) -> dict:
         student_answers[question] = answer
     return student_answers
 
-def grade_quiz(student_answers: dict, correct_answers: dict) -> float:
+def grade(correct_answer_dict, answers):
     '''
     arguments: student answers and correct answers
     returns: a float of student grade
     description: grade_quiz compares student answers to correct answers and provides a grade based upon the percentage they answered correctly
     '''
     correct_answers = 0
-    for question, answer in student_answers.items():
-        if answer.upper() == correct_answers[question][16]:
-            correct_answers += 1
+    for question, answer in answers.items():
+        if answer.upper() == correct_answer_dict[question].upper()[16]:
+            correct_answers+=1
     grade = 100 * correct_answers / len(answers)
     return grade
 
@@ -90,8 +90,8 @@ response = openai.Completion.create(
 quiz_with_answers = response['choices'][0]['text']
 quiz = create_student_view(quiz=quiz_with_answers, num_questions=4)
 answers = extract_answers(quiz=quiz_with_answers, num_questions=4)
-print(answers[1][16])
+
 # Simulate exam and grade
 student_answers = take_quiz(student_view=quiz)
-grade = grade_quiz(student_answers=student_answers, correct_answers=answers)
-# print(f"You have received a {grade}% on the python quiz")
+my_grade = grade(correct_answer_dict=answers, answers=student_answers)
+print(f"You have received a {my_grade}% on the python quiz")
