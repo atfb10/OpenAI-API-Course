@@ -46,7 +46,7 @@ def save_img(img_response, file_name) -> int:
         print('ERROR LOADING IMAGE')
     return img_results.status_code
 
-i = ['butter', 'eggs', 'milk', 'bacon', 'havarti cheese', 'french bread']
+i = ['ground turkey', 'zucchini', 'tomatoes', 'rice']
 
 response = openai.Completion.create(
     model='text-davinci-003',
@@ -57,6 +57,7 @@ response = openai.Completion.create(
 
 # The recipe
 recipe_text = response['choices'][0]['text']
+print(recipe_text)
 
 # get recipe title to generate photo
 recipe_title = extract_recipe_title(recipe=recipe_text)
