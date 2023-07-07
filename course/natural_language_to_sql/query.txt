@@ -1,0 +1,4 @@
+SELECT  salesperson, date_of_sale, SUM(sale_price)
+FROM Sales
+GROUP BY salesperson, date_of_sale
+ORDER BY salesperson, date_of_sale

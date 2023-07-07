@@ -13,7 +13,7 @@ from sqlalchemy import (
 )
 
 from key import key as openai_key
-
+openai.api_key = openai_key
 
 def create_table_defintion(df:pd.DataFrame):
     '''
